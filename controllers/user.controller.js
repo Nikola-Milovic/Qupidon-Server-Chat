@@ -11,5 +11,20 @@ async function GetUserByID(id) {
 async function CreateNewUser(id) {
     await UserModel.User.create({ user_id: id })
 }
+
+function OnUserConnected(userData) {
+    UserModel.User.update({ user_id: userData.user_id }, {
+        socket_id: userData.socket_id
+    })
+}
+
+function OnUserDisconnected(userid) {
+    UserModel.User.update({ user_id: userid }, {
+        socket_id: ""
+    })
+}
+
 exports.CreateNewUser = CreateNewUser
 exports.GetUserByID = GetUserByID
+exports.OnUserConnected = OnUserConnected
+exports.OnUserDisconnected = OnUserDisconnected
