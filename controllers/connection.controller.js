@@ -1,5 +1,6 @@
 const logger = require("../../qupidon-app/logging/logger");
 const UserController = require("../controllers/user.controller")
+const MessageController = require("../controllers/message.controller")
 
 module.exports = function (io) {
     OnConnection(io)
@@ -24,13 +25,13 @@ function OnUserConnected(socket) {
 }
 
 function OnUserDisconnected(socket) {
-    socket.on("onUserConnected", (...args) => {
+    socket.on("onUserDisconnected", (...args) => {
         UserController.OnUserDisconnected(JSON.parse(args[0]).user_id)
     });
 }
 
 function OnMessageSent(socket) {
     socket.on("onMessageSent", (...args) => {
-        console.log(JSON.parse(args[0]))
+        MessageController.OnMessageSent(JSON.parse(args[0]), socket);
     });
 }

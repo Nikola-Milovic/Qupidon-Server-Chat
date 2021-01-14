@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const messageModel = require('./message.model')
 
 const userSchema = new mongoose.Schema({
     user_id: {
@@ -8,6 +9,9 @@ const userSchema = new mongoose.Schema({
     },
     socket_id: {
         type: String
+    },
+    unread_messages: {
+        type: [messageModel.Schema]
     }
 });
 
