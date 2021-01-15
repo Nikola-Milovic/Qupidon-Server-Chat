@@ -14,12 +14,15 @@ async function CreateNewUser(id) {
     await UserModel.User.create({ user_id: id })
 }
 
+async function AddFCMToken(id, token) {
+    await UserModel.User.updateOne({ user_id: id }, { fcm_token: token })
+}
+
 async function OnUserConnected(userData) {
     console.log("user connected " + userData)
     await UserModel.User.updateOne({ user_id: userData.user_id }, {
         socket_id: userData.socket_id
     }, function (err, res) {
-        console.log(res)
     });
 }
 
@@ -30,8 +33,8 @@ async function OnUserDisconnected(userid) {
     })
 }
 
-function AddNewMessage(message) {
-    UserModel.User.updateOne({ user_id: message.receiver_id }, {
+async function AddNewMessage(message) {
+    await UserModel.User.updateOne({ user_id: message.receiver_id }, {
         $push: { unread_messages: { sender_id: message.sender_id, content: message.content } }
     })
 }
@@ -41,3 +44,4 @@ exports.GetUserByID = GetUserByID
 exports.OnUserConnected = OnUserConnected
 exports.OnUserDisconnected = OnUserDisconnected
 exports.AddNewMessage = AddNewMessage
+exports.AddFCMToken = AddFCMToken

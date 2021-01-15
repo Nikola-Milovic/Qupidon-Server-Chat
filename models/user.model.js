@@ -5,13 +5,17 @@ const messageModel = require('./message.model')
 const userSchema = new mongoose.Schema({
     user_id: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     socket_id: {
         type: String
     },
     unread_messages: {
         type: [messageModel.Schema]
+    }, fcm_token:
+    {
+        type: String
     }
 });
 
