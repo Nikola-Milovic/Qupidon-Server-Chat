@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     unread_messages: {
-        type: [messageModel.Schema]
+        type: [messageModel.Schema],
+        default: []
     }, fcm_token:
     {
         type: String

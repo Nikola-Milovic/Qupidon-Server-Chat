@@ -9,10 +9,8 @@ router.post('/',
     }
 );
 
-
 router.post('/tok',
     async function (req, res) {
-        console.log(req.body.token)
         UserController.AddFCMToken(req.query.id, req.body.token)
         res.sendStatus(200)
     }
